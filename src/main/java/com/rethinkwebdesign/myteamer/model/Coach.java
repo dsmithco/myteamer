@@ -1,22 +1,18 @@
 package com.rethinkwebdesign.myteamer.model;
 
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "players", indexes = {
+@Table(name = "coaches", indexes = {
     @Index(columnList = "firstName", name = "player_first_name_hidx"),
     @Index(columnList = "lastName", name = "player_last_name_hidx")
 })
-
-public class Player {
-
+public class Coach {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,11 +26,6 @@ public class Player {
     private String lastName;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
-    @Column(name = "birthday")
-    private Date birthday = new Date();;
-
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "posted_at")
     private Date postedAt = new Date();
@@ -44,7 +35,6 @@ public class Player {
     @Column(name = "last_updated_at")
     private Date lastUpdatedAt = new Date();
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
@@ -73,36 +63,18 @@ public class Player {
         this.lastName = lastName;
     }
 
-    @JsonGetter("birthday")
-    public String getBirthday() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        return formatter.format(birthday);
-    }
-
-    @JsonSetter("birthday")
-    public void setBirthDay(String birthday) {
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-            this.birthday = formatter.parse(birthday);
-            System.out.println("Date is: " + birthday);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
     @JsonGetter("fullName")
     public String getFullName(){
         return firstName + " " + lastName;
     }
 
-    @JsonGetter("teamId")
+    @JsonGetter("team_id")
     public long getTeamId(){
         return this.team.getId();
     }
 
-    @JsonSetter("teamId")
+    @JsonSetter("team_id")
     public void setTeam(long value) {
         this.team = new Team(value);
     }
-
 }

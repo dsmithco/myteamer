@@ -43,6 +43,12 @@ public class Team {
             mappedBy = "team")
     private Set<Player> players = new HashSet<>();
 
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "team")
+    private Set<Coach> coaches = new HashSet<>();
+
     public Team() {
 
     }
@@ -92,4 +98,13 @@ public class Team {
     public void setPlayers(Set<Player> players) {
         this.players = players;
     }
+
+    public Iterable<Coach> getCouches() {
+        return coaches;
+    }
+
+    public void setCoaches(Set<Coach> coaches) {
+        this.coaches = coaches;
+    }
+
 }

@@ -42,10 +42,12 @@ public class PlayerController {
         if(player == null) {
             return ResponseEntity.notFound().build();
         }
-        if(teamDetails.getName() != null){
-            player.setName(teamDetails.getName());
+        if(teamDetails.getFirstName() != null){
+            player.setFirstName(teamDetails.getFirstName());
         }
-
+        if(teamDetails.getLastName() != null){
+            player.setLastName(teamDetails.getLastName());
+        }
         Player updatedPlayer = playerRepository.save(player);
         return ResponseEntity.ok(updatedPlayer);
     }
