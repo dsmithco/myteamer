@@ -99,7 +99,7 @@ public class Team {
         this.players = players;
     }
 
-    public Iterable<Coach> getCouches() {
+    public Iterable<Coach> getCoaches() {
         return coaches;
     }
 

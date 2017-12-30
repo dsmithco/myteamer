@@ -1,6 +1,7 @@
 package com.rethinkwebdesign.myteamer.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import javax.persistence.*;
@@ -8,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "players", indexes = {
@@ -15,7 +18,7 @@ import java.util.Date;
     @Index(columnList = "lastName", name = "player_last_name_hidx")
 })
 
-public class Player {
+public class Player implements Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,10 +47,13 @@ public class Player {
     @Column(name = "last_updated_at")
     private Date lastUpdatedAt = new Date();
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contactInfoId")
+    private ContactInfo contactInfo;
 
     public Long getId() {
         return id;
@@ -80,7 +86,7 @@ public class Player {
     }
 
     @JsonSetter("birthday")
-    public void setBirthDay(String birthday) {
+    public void setBirthday(String birthday) {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         try {
             this.birthday = formatter.parse(birthday);
@@ -103,6 +109,22 @@ public class Player {
     @JsonSetter("teamId")
     public void setTeam(long value) {
         this.team = new Team(value);
+    }
+
+    public Date getPostedAt() {
+        return postedAt;
+    }
+
+    public Date getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public ContactInfo getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(ContactInfo contactInfo) {
+        this.contactInfo = contactInfo;
     }
 
 }

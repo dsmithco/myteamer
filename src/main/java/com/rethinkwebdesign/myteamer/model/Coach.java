@@ -6,13 +6,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "coaches", indexes = {
     @Index(columnList = "firstName", name = "player_first_name_hidx"),
     @Index(columnList = "lastName", name = "player_last_name_hidx")
 })
-public class Coach {
+public class Coach implements Person{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -39,13 +41,13 @@ public class Coach {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contactInfoId")
+    private ContactInfo contactInfo;
 
-    public Team getTeam() {
-        return team;
-    }
+    public Long getId() { return id; }
+
+    public Team getTeam() { return team; }
 
     public String getFirstName() {
         return firstName;
@@ -63,18 +65,25 @@ public class Coach {
         this.lastName = lastName;
     }
 
-    @JsonGetter("fullName")
     public String getFullName(){
         return firstName + " " + lastName;
     }
 
-    @JsonGetter("team_id")
+    @JsonGetter("teamId")
     public long getTeamId(){
         return this.team.getId();
     }
 
-    @JsonSetter("team_id")
+    @JsonSetter("teamId")
     public void setTeam(long value) {
         this.team = new Team(value);
+    }
+
+    public ContactInfo getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(ContactInfo contactInfo) {
+        this.contactInfo = contactInfo;
     }
 }

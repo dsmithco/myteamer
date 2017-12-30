@@ -48,6 +48,11 @@ public class PlayerController {
         if(teamDetails.getLastName() != null){
             player.setLastName(teamDetails.getLastName());
         }
+
+        if(teamDetails.getBirthday() != null){
+            player.setBirthday(teamDetails.getBirthday());
+        }
+
         Player updatedPlayer = playerRepository.save(player);
         return ResponseEntity.ok(updatedPlayer);
     }
