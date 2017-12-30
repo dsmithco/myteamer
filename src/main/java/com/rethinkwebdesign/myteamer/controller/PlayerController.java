@@ -22,6 +22,12 @@ public class PlayerController {
 
     @PostMapping("/players")
     public Player createPlayer(@Valid @RequestBody Player player) {
+        if(player.getId() != null){
+            Player savedPlayer = playerRepository.findOne(player.getId());
+            if(savedPlayer.getContactInfo() != null){
+                player.getContactInfo().setId(savedPlayer.getContactInfo().getId());
+            }
+        }
         return playerRepository.save(player);
     }
 
@@ -37,20 +43,27 @@ public class PlayerController {
 
     @PutMapping("/players/{id}")
     public ResponseEntity<Player> updateNote(@PathVariable(value = "id") Long playerId,
-                                           @Valid @RequestBody Player teamDetails) {
+                                           @Valid @RequestBody Player playerDetails) {
         Player player = playerRepository.findOne(playerId);
         if(player == null) {
             return ResponseEntity.notFound().build();
         }
-        if(teamDetails.getFirstName() != null){
-            player.setFirstName(teamDetails.getFirstName());
+        if(playerDetails.getFirstName() != null){
+            player.setFirstName(playerDetails.getFirstName());
         }
-        if(teamDetails.getLastName() != null){
-            player.setLastName(teamDetails.getLastName());
+        if(playerDetails.getLastName() != null){
+            player.setLastName(playerDetails.getLastName());
         }
 
-        if(teamDetails.getBirthday() != null){
-            player.setBirthday(teamDetails.getBirthday());
+        if(playerDetails.getBirthday() != null){
+            player.setBirthday(playerDetails.getBirthday());
+        }
+
+        if(playerDetails.getContactInfo() != null){
+            if(playerDetails.getContactInfo() != null && player.getContactInfo() != null){
+                playerDetails.getContactInfo().setId(player.getContactInfo().getId());
+            }
+            player.setContactInfo(playerDetails.getContactInfo());
         }
 
         Player updatedPlayer = playerRepository.save(player);
