@@ -48,6 +48,9 @@ public class Team {
             mappedBy = "team")
     private Set<Coach> coaches = new HashSet<>();
 
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TeamGame> teamGames;
+
     public Team() {
 
     }
@@ -106,4 +109,11 @@ public class Team {
         this.coaches = coaches;
     }
 
+    public Set<TeamGame> getTeamGames() {
+        return teamGames;
+    }
+
+    public void setTeamGame(Set<TeamGame> teamGame) {
+        this.teamGames = teamGames;
+    }
 }

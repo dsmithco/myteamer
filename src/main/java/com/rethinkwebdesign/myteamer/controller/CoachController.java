@@ -1,7 +1,6 @@
 package com.rethinkwebdesign.myteamer.controller;
 
 import com.rethinkwebdesign.myteamer.model.Coach;
-import com.rethinkwebdesign.myteamer.model.Coach;
 import com.rethinkwebdesign.myteamer.repository.CoachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
-public class CoachesController {
+public class CoachController {
 
     @Autowired
     CoachRepository coachRepository;
