@@ -65,22 +65,18 @@ public class Game implements Event{
     }
 
     @Transient
-    private ArrayList<Integer> teamIds;
+    private ArrayList<Long> teamIds;
 
-    @JsonSetter("teamIds")
-    public void setJsonTeamIds(ArrayList<Integer> teamIds) {
-        this.teamIds = teamIds;
-    }
 
     @JsonGetter("teamIds")
-    public ArrayList<Integer> getTeamIds(){
+    public ArrayList<Long> getTeamIds(){
         if(teamIds != null){
             return teamIds;
         }
-        ArrayList<Integer> currentTeamIds = new ArrayList<>();
+        ArrayList<Long> currentTeamIds = new ArrayList<>();
         for (TeamGame tg: getTeamGames()) {
             Long teamId = tg.getTeam().getId();
-            currentTeamIds.add((int) (long) teamId);
+            currentTeamIds.add(teamId);
         }
         return currentTeamIds;
     }

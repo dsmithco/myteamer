@@ -48,12 +48,15 @@ public class GameController {
 
     @PutMapping("/games/{id}")
     public ResponseEntity<Game> updateNote(@PathVariable(value = "id") Long gameId,
-                                           @Valid @RequestBody Game teamDetails) {
+                                           @Valid @RequestBody Game gameDetails) {
         Game game = gameRepository.findOne(gameId);
         if(game == null) {
             return ResponseEntity.notFound().build();
         }
         Game updatedGame = gameRepository.save(game);
+        if(gameDetails.getTeamIds() != null){
+            this.setTeamGames(updatedGame, gameDetails.getTeamIds());
+        }
         return ResponseEntity.ok(updatedGame);
     }
 
@@ -68,17 +71,18 @@ public class GameController {
         return ResponseEntity.ok().build();
     }
 
-    private void setTeamGames(Game game, ArrayList<Integer> teamIds){
+    private void setTeamGames(Game game, ArrayList<Long> teamIds){
 
         Set<TeamGame> teamGames = game.getTeamGames();
         ArrayList<Long> currentTeamIds = new ArrayList<>();
-        if(teamGames != null){
-            for(TeamGame tg: teamGames){
-                currentTeamIds.add(tg.getId());
+        if(game.getTeamGames() != null){
+            for (TeamGame tg: game.getTeamGames()){
+                currentTeamIds.add(tg.getTeam().getId());
             }
             teamIds.removeAll(currentTeamIds);
+            System.out.println(teamIds);
         }
-        for(int id: teamIds){
+        for(long id: teamIds){
             TeamGame teamGame = new TeamGame(new Team((long) id), game);
             teamGameRepository.save(teamGame);
         }
