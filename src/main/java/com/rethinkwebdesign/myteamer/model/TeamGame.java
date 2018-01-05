@@ -3,19 +3,31 @@ package com.rethinkwebdesign.myteamer.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "team_games")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TeamGame {
+
+    public TeamGame(Team team, Game game) {
+        this.setTeam(team);
+        this.setGame(game);
+    }
+
+    public TeamGame() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "teamId")
     private Team team;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "gameId")
     private Game game;
@@ -46,6 +58,10 @@ public class TeamGame {
 
     public void setHome(boolean home) {
         isHome = home;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 }

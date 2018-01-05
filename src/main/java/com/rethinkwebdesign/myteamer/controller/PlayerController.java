@@ -59,6 +59,10 @@ public class PlayerController {
             player.setBirthday(playerDetails.getBirthday());
         }
 
+        if(playerDetails.getJerseyNumber() != null){
+            player.setJerseyNumber(playerDetails.getJerseyNumber());
+        }
+
         if(playerDetails.getContactInfo() != null){
             if(playerDetails.getContactInfo() != null && player.getContactInfo() != null){
                 playerDetails.getContactInfo().setId(player.getContactInfo().getId());

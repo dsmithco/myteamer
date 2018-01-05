@@ -1,6 +1,8 @@
 package com.rethinkwebdesign.myteamer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -48,6 +50,7 @@ public class Team {
             mappedBy = "team")
     private Set<Coach> coaches = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TeamGame> teamGames;
 
@@ -109,11 +112,22 @@ public class Team {
         this.coaches = coaches;
     }
 
+    @JsonIgnore
     public Set<TeamGame> getTeamGames() {
         return teamGames;
     }
 
+    @JsonIgnore
     public void setTeamGame(Set<TeamGame> teamGame) {
         this.teamGames = teamGames;
     }
+
+//    public Set<Game> getGames(){
+//        Set<Game> games = new HashSet<>();
+//        for(TeamGame tg: this.teamGames){
+//            games.add(tg.getGame());
+//        }
+//        return games;
+//    }
+
 }

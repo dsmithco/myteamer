@@ -1,7 +1,6 @@
 package com.rethinkwebdesign.myteamer.model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import javax.persistence.*;
@@ -9,8 +8,6 @@ import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "players", indexes = {
@@ -55,6 +52,10 @@ public class Player implements Person {
     @JoinColumn(name = "contactInfoId")
     private ContactInfo contactInfo;
 
+
+    @Column
+    private String jerseyNumber;
+
     public Long getId() {
         return id;
     }
@@ -79,13 +80,11 @@ public class Player implements Person {
         this.lastName = lastName;
     }
 
-    @JsonGetter("birthday")
     public String getBirthday() {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         return formatter.format(birthday);
     }
 
-    @JsonSetter("birthday")
     public void setBirthday(String birthday) {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         try {
@@ -127,4 +126,11 @@ public class Player implements Person {
         this.contactInfo = contactInfo;
     }
 
+    public String getJerseyNumber() {
+        return jerseyNumber;
+    }
+
+    public void setJerseyNumber(String jerseyNumber) {
+        this.jerseyNumber = jerseyNumber;
+    }
 }
