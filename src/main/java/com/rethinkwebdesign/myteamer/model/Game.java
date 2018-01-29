@@ -66,16 +66,18 @@ public class Game implements Event{
 
     @JsonSetter("teamIds")
     public void setTeamIds(ArrayList<Long> ids){
-        for(TeamGame tg: this.getTeamGames()){
-            if(!ids.contains(tg.getTeamId())){
-                this.removeTeam(tg.getTeamId());
-            }
-        }
         for(long id: ids){
             if(!this.getTeamIds().contains(id)){
                 this.addTeam(id);
             }
         }
+        Set<TeamGame> removeTeamGames = new HashSet<>();
+        for(TeamGame tg: this.getTeamGames()){
+            if(!ids.contains(tg.getTeamId())){
+                removeTeamGames.add(tg);
+            }
+        }
+        this.teamGames.removeAll(removeTeamGames);
         this.teamIds = ids;
     }
 

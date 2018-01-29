@@ -56,6 +56,7 @@ public class Team {
             mappedBy = "team")
     private Set<TeamGame> teamGames = new HashSet<>();
 
+    @JsonIgnore
     public Set<TeamGame> getTeamGames() {
         return teamGames;
     }
