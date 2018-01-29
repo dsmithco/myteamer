@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -16,7 +18,7 @@ import java.util.*;
 public class Game implements Event{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
@@ -28,76 +30,94 @@ public class Game implements Event{
     @Column(name = "last_updated_at")
     private Date lastUpdatedAt = new Date();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<TeamGame> teamGames;
-
     public Game() {
 
     }
 
-    public Game(Long id) {
+    public Game(long id) {
         this.id = id;
     }
 
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "game", orphanRemoval = true)
+    private Set<TeamGame> teamGames = new HashSet<>();
+
     public Set<TeamGame> getTeamGames() {
         return teamGames;
     }
 
-
-    @JsonSetter("teamGames")
-    public void setTeamGames(Set<TeamGame> teamGame) {
+    public void setTeamGames(Set<TeamGame> teamGames) {
         this.teamGames = teamGames;
-    }
-
-    @JsonIgnore
-    public Set<Team> getTeams(){
-        Set<Team> teams = new HashSet<>();
-        for(TeamGame tg: this.teamGames){
-            teams.add(tg.getTeam());
-        }
-        return teams;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Transient
     private ArrayList<Long> teamIds;
 
-
-    @JsonGetter("teamIds")
     public ArrayList<Long> getTeamIds(){
-        if(teamIds != null){
-            return teamIds;
+        if(this.teamIds != null){
+            return this.teamIds;
         }
-        ArrayList<Long> currentTeamIds = new ArrayList<>();
-        for (TeamGame tg: getTeamGames()) {
-            Long teamId = tg.getTeam().getId();
-            currentTeamIds.add(teamId);
+        ArrayList<Long> ids = new ArrayList<>();
+        for(TeamGame tg: this.teamGames){
+            ids.add(tg.getTeamId());
         }
-        return currentTeamIds;
+        return ids;
     }
 
-    //    @JsonSetter("teamIds")
-//    public void setTeamIds(ArrayList<Integer> teamIds){
-//        System.out.println(teamIds);
-//        Set<TeamGame> teamGames = this.getTeamGames();
-//        System.out.println(teamGames);
-//        ArrayList<Long> currentTeamIds = new ArrayList<>();
-//        System.out.println(currentTeamIds);
-//        if(teamGames != null){
-//            for(TeamGame tg: teamGames){
-//                System.out.println(tg.getId());
-//                currentTeamIds.add(tg.getId());
-//            }
-//            teamIds.removeAll(currentTeamIds);
-//        }
-//        for(int id: teamIds){
-//            TeamGame teamGame = new TeamGame(new Team((long) id), this);
-//            System.out.println(teamGame.getTeam().getId());
-//        }
-//    }
+    @JsonSetter("teamIds")
+    public void setTeamIds(ArrayList<Long> ids){
+        for(TeamGame tg: this.getTeamGames()){
+            if(!ids.contains(tg.getTeamId())){
+                this.removeTeam(tg.getTeamId());
+            }
+        }
+        for(long id: ids){
+            if(!this.getTeamIds().contains(id)){
+                this.addTeam(id);
+            }
+        }
+        this.teamIds = ids;
+    }
+
+    public void addTeamGame(TeamGame tg){
+        this.teamGames.add(tg);
+    }
+
+    public void removeTeamGame(long teamId){
+        for(TeamGame tg: this.getTeamGames()){
+            if(teamId == tg.getTeamId()){
+                this.teamGames.remove(tg);
+            }
+        }
+    }
+
+    public void clearTeamGames(){
+        this.teamGames = new HashSet<>();
+    }
+
+    public void addTeamGame(long teamId){
+        this.teamGames.add(new TeamGame(new Team(teamId), this));
+    }
+
+    public void addTeamGame(Team team){
+        this.teamGames.add(new TeamGame(team, this));
+    }
+
+    public void addTeam(Team team){
+
+    }
+
+    public void addTeam(long teamId){
+        this.addTeamGame(teamId);
+    }
+
+    public void removeTeam(long teamId){
+        this.removeTeamGame(teamId);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+
 }

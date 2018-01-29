@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -31,8 +32,7 @@ public class GameController {
 
     @PostMapping(value = "/games")
     public Game createGame(@Valid @RequestBody Game game) {
-        Game newGame = gameRepository.save(game);
-        this.setTeamGames(newGame, game.getTeamIds());
+        Game newGame =  gameRepository.save(game);
         return newGame;
     }
 
@@ -53,11 +53,12 @@ public class GameController {
         if(game == null) {
             return ResponseEntity.notFound().build();
         }
-        Game updatedGame = gameRepository.save(game);
+
         if(gameDetails.getTeamIds() != null){
-            this.setTeamGames(updatedGame, gameDetails.getTeamIds());
+            game.setTeamIds(gameDetails.getTeamIds());
         }
-        return ResponseEntity.ok(updatedGame);
+
+        return ResponseEntity.ok(gameRepository.save(game));
     }
 
     @DeleteMapping("/games/{id}")
@@ -71,20 +72,11 @@ public class GameController {
         return ResponseEntity.ok().build();
     }
 
-    private void setTeamGames(Game game, ArrayList<Long> teamIds){
-
-        Set<TeamGame> teamGames = game.getTeamGames();
-        ArrayList<Long> currentTeamIds = new ArrayList<>();
-        if(game.getTeamGames() != null){
-            for (TeamGame tg: game.getTeamGames()){
-                currentTeamIds.add(tg.getTeam().getId());
-            }
-            teamIds.removeAll(currentTeamIds);
-            System.out.println(teamIds);
-        }
-        for(long id: teamIds){
-            TeamGame teamGame = new TeamGame(new Team((long) id), game);
-            teamGameRepository.save(teamGame);
-        }
+    private void setTeamGameRepository(ArrayList<Long> teamIds, Game game){
     }
+
+    private void setTeamIds(ArrayList<Long> teamIds){
+
+    }
+
 }

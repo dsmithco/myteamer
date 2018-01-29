@@ -1,6 +1,8 @@
 package com.rethinkwebdesign.myteamer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,27 +17,27 @@ public class TeamGame {
         this.setGame(game);
     }
 
+    public TeamGame(long teamId, long gameId) {
+        this.setTeam(new Team(teamId));
+        this.setGame(new Game(gameId));
+    }
+
+    public TeamGame(long id) {
+        this.id = id;
+    }
+
     public TeamGame() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teamId")
     private Team team;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "gameId")
-    private Game game;
-
-    @Column(name = "isHome")
-    private boolean isHome;
-
-
+    @JsonIgnore
     public Team getTeam() {
         return team;
     }
@@ -44,13 +46,32 @@ public class TeamGame {
         this.team = team;
     }
 
+    @JsonSetter("teamId")
+    public void setTeam(long teamId) {
+        this.team = new Team(teamId);
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gameId")
+    private Game game;
+
+    @JsonIgnore
     public Game getGame() {
         return game;
     }
 
+
     public void setGame(Game game) {
         this.game = game;
     }
+
+    @JsonSetter("gameId")
+    public void setGame(long gameId) {
+        this.game = new Game(gameId);
+    }
+
+    @Column(name = "isHome")
+    private boolean isHome;
 
     public boolean isHome() {
         return isHome;
@@ -60,8 +81,20 @@ public class TeamGame {
         isHome = home;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
+    }
+
+    public long getTeamId(){
+        return getTeam().getId();
+    }
+
+    public String getTeamName(){
+        return team.getName();
+    }
+
+    public long getGameId(){
+        return getGame().getId();
     }
 
 }

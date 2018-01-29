@@ -16,9 +16,10 @@ import java.util.Set;
 })
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Team {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column
     private String name;
@@ -50,16 +51,29 @@ public class Team {
             mappedBy = "team")
     private Set<Coach> coaches = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<TeamGame> teamGames;
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "team")
+    private Set<TeamGame> teamGames = new HashSet<>();
+
+    public Set<TeamGame> getTeamGames() {
+        return teamGames;
+    }
+
+    public void setTeamGames(Set<TeamGame> teamGames) {
+        this.teamGames = teamGames;
+    }
 
     public Team() {
 
     }
 
-    public Team(Long id) {
+    public Team(long id) {
         this.id = id;
+    }
+
+    public Team(int id) {
+        this.id = (long)(int) id;
     }
 
     public Team(String name, String sport, String division) {
@@ -68,7 +82,7 @@ public class Team {
         this.division = division;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -111,23 +125,5 @@ public class Team {
     public void setCoaches(Set<Coach> coaches) {
         this.coaches = coaches;
     }
-
-    @JsonIgnore
-    public Set<TeamGame> getTeamGames() {
-        return teamGames;
-    }
-
-    @JsonIgnore
-    public void setTeamGame(Set<TeamGame> teamGame) {
-        this.teamGames = teamGames;
-    }
-
-//    public Set<Game> getGames(){
-//        Set<Game> games = new HashSet<>();
-//        for(TeamGame tg: this.teamGames){
-//            games.add(tg.getGame());
-//        }
-//        return games;
-//    }
 
 }
