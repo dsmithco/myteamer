@@ -86,4 +86,5 @@ public class Coach implements Person{
     public void setContactInfo(ContactInfo contactInfo) {
         this.contactInfo = contactInfo;
     }
+
 }

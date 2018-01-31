@@ -127,4 +127,9 @@ public class Team {
         this.coaches = coaches;
     }
 
+    public String getCoachNames(){
+        String coachNames = "names...";
+        return coachNames;
+    }
+
 }
