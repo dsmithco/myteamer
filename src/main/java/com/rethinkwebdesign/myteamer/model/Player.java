@@ -25,9 +25,19 @@ public class Player implements Person {
     @Column
     private String firstName;
 
+
+    @NotNull
+    @Column
+    private String middleName;
+
+    @NotNull
+    @Column
+    private String nickName;
+
     @NotNull
     @Column
     private String lastName;
+
 
     @NotNull
     @Temporal(TemporalType.DATE)
@@ -80,6 +90,22 @@ public class Player implements Person {
         this.lastName = lastName;
     }
 
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
     public String getBirthday() {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         return formatter.format(birthday);
@@ -97,7 +123,7 @@ public class Player implements Person {
 
     @JsonGetter("fullName")
     public String getFullName(){
-        return firstName + " " + lastName;
+        return firstName + " " + middleName + " " + lastName;
     }
 
     @JsonGetter("teamId")

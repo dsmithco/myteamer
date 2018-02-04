@@ -29,20 +29,26 @@ class App extends Component {
       isOpen: false
     }
   }
+
+  pageChange(){
+    console.log('change');
+      this.setState({isOpen: false})
+  }
+
   render() {
     return (
       <div className="App">
         <Navbar color="dark" className="text-white" links="white" dark expand="md">
           <div className="container">
             <Link className="navbar-brand" to="/">MyTeamer</Link>
-            <NavbarToggler onClick={this.toggle} />
+            <NavbarToggler onClick={()=>{this.setState({isOpen: !this.state.isOpen})}} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link className="nav-link" to="/teams">Teams</Link>
+                  <Link className="nav-link" onClick={()=>this.pageChange()} to="/teams">Teams</Link>
                 </NavItem>
                 <NavItem>
-                  <Link className="nav-link" to="/games">Games</Link>
+                  <Link className="nav-link" onClick={()=>this.pageChange()} to="/games">Games</Link>
                 </NavItem>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav caret>
@@ -69,7 +75,7 @@ class App extends Component {
         <div className="container text-left">
           <Switch>
             <Route exact path="/teams" component={Teams}/>
-            <Route exact path="/teams/:id" component={Team}/>
+            <Route path="/teams/:id" component={Team}/>
             <Route path="/games" component={Games}/>
             // <Redirect from="/invoices" to="/invoices/dashboard"/>
           </Switch>
