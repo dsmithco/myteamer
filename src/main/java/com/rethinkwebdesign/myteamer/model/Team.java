@@ -111,6 +111,7 @@ public class Team {
         this.division = division;
     }
 
+    @JsonIgnore
     public Iterable<Player> getPlayers() {
         return players;
     }

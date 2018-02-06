@@ -1,7 +1,9 @@
 package com.rethinkwebdesign.myteamer.controller;
 
 import com.rethinkwebdesign.myteamer.model.Player;
+import com.rethinkwebdesign.myteamer.model.Team;
 import com.rethinkwebdesign.myteamer.repository.PlayerRepository;
+import com.rethinkwebdesign.myteamer.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,11 @@ public class PlayerController {
     @GetMapping("/players")
     public Iterable<Player> getAllPlayers() {
         return playerRepository.findAll();
+    }
+
+    @GetMapping("/teams/{teamId}/players")
+    public Iterable<Player> getByTeam(@PathVariable(value = "teamId") Long teamId) {
+        return playerRepository.findByTeam(new Team(teamId));
     }
 
     @PostMapping("/players")
@@ -50,6 +57,9 @@ public class PlayerController {
         }
         if(playerDetails.getFirstName() != null){
             player.setFirstName(playerDetails.getFirstName());
+        }
+        if(playerDetails.getMiddleName() != null){
+            player.setMiddleName(playerDetails.getMiddleName());
         }
         if(playerDetails.getLastName() != null){
             player.setLastName(playerDetails.getLastName());

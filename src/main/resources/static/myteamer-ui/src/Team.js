@@ -10,6 +10,8 @@ import {
   ModalFooter } from 'reactstrap';
 import Fadein from './Fadein.js';
 import Players from './Players.js';
+import Messages from './Messages.js';
+import Schedule from './Schedule.js';
 import {
   Switch,
   Route,
@@ -45,18 +47,35 @@ class Team extends Component {
           <h1>{this.state.team.name}</h1>
           <ul className="nav nav-tabs">
             <li className="nav-item">
-              <a className="nav-link active" href="#">Players</a>
+              <Link className={`nav-link ${(this.props.location.pathname.indexOf('players') > -1 ? 'active':'')}`}
+                    to={`/teams/${this.props.match.params.id}/players`}> Players
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Schedule</a>
+              <Link className={`nav-link ${(this.props.location.pathname.indexOf('schedule') > -1 ? 'active':'')}`}
+                    to={`/teams/${this.props.match.params.id}/schedule`}> Schedule
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Messages</a>
+              <Link className={`nav-link ${(this.props.location.pathname.indexOf('messages') > -1 ? 'active':'')}`}
+                    to={`/teams/${this.props.match.params.id}/messages`}> Messages
+              </Link>
             </li>
           </ul>
           <br/>
           <Switch>
-            <Route path="/teams/:id/players" render={()=><Players match={this.props.match} players={this.state.team.players}/>}/>
+            <Route
+              path="/teams/:id/players"
+              render={()=><Players match={this.props.match}/>}
+            />
+            <Route
+              path="/teams/:id/schedule"
+              render={()=><Schedule match={this.props.match}/>}
+            />
+            <Route
+              path="/teams/:id/messages"
+              render={()=><Messages match={this.props.match}/>}
+            />
             <Redirect to={this.props.location.pathname + '/players'}/>
           </Switch>
         </Fadein>

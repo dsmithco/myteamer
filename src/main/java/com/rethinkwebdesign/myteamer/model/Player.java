@@ -115,7 +115,6 @@ public class Player implements Person {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         try {
             this.birthday = formatter.parse(birthday);
-            System.out.println("Date is: " + birthday);
         } catch (ParseException e) {
             e.printStackTrace();
         }
