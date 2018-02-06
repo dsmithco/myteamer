@@ -51,7 +51,7 @@ class Players extends Component {
       this.setState({players: nextState.players})
     }
   }
-  
+
   editPlayer(player){
     this.setState({editPlayer: player});
     this.togglePlayerModal(true);
@@ -174,18 +174,18 @@ class Players extends Component {
                   <div className='col-sm-3 pr-sm-0'>
                     <div className="form-group">
                       <input type='hidden' name="playerId" defaultValue={this.state.editPlayer.id}/>
-                      <input type='text' ref="playerNameInput" name="firstName" defaultValue={this.state.editPlayer.firstName} placeholder='First Name' className='form-control'/>
-                      <input type='hidden' name="nickName" defaultValue={this.state.editPlayer.nickName} placeholder='Nick Name' className='form-control'/>
+                      <input type='text' ref="playerNameInput" name="firstName" defaultValue={this.state.editPlayer.firstName} placeholder='First Name' className='form-control simple'/>
+                      <input type='hidden' name="nickName" defaultValue={this.state.editPlayer.nickName} placeholder='Nick Name' className='form-control simple'/>
                     </div>
                   </div>
                   <div className='col-sm-2 pr-sm-0'>
                     <div className="form-group">
-                      <input type='text' name="middleName" defaultValue={this.state.editPlayer.middleName} placeholder='Middle Name' className='form-control'/>
+                      <input type='text' name="middleName" defaultValue={this.state.editPlayer.middleName} placeholder='Middle Name' className='form-control simple'/>
                     </div>
                   </div>
                   <div className='col-sm-4'>
                     <div className="form-group">
-                      <input type='text' name="lastName" defaultValue={this.state.editPlayer.lastName} placeholder='Last Name' className='form-control'/>
+                      <input type='text' name="lastName" defaultValue={this.state.editPlayer.lastName} placeholder='Last Name' className='form-control simple'/>
                     </div>
                   </div>
                 </div>
@@ -195,7 +195,7 @@ class Players extends Component {
                   </div>
                   <div className='col-sm-3'>
                     <div className="form-group">
-                      <input type='text' name="jerseyNumber" defaultValue={this.state.editPlayer.jerseyNumber} placeholder='#' className='form-control'/>
+                      <input type='text' name="jerseyNumber" defaultValue={this.state.editPlayer.jerseyNumber} placeholder='#' className='form-control simple'/>
                     </div>
                   </div>
                 </div>

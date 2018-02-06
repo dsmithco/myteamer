@@ -48,17 +48,17 @@ class Team extends Component {
           <ul className="nav nav-tabs">
             <li className="nav-item">
               <Link className={`nav-link ${(this.props.location.pathname.indexOf('players') > -1 ? 'active':'')}`}
-                    to={`/teams/${this.props.match.params.id}/players`}> Players
+                    to={`/teams/${this.props.match.params.id}/players`}> <i className='la la-users'></i> Players
               </Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link ${(this.props.location.pathname.indexOf('schedule') > -1 ? 'active':'')}`}
-                    to={`/teams/${this.props.match.params.id}/schedule`}> Schedule
+                    to={`/teams/${this.props.match.params.id}/schedule`}> <i className='la la-calendar'></i> Schedule
               </Link>
             </li>
             <li className="nav-item">
               <Link className={`nav-link ${(this.props.location.pathname.indexOf('messages') > -1 ? 'active':'')}`}
-                    to={`/teams/${this.props.match.params.id}/messages`}> Messages
+                    to={`/teams/${this.props.match.params.id}/messages`}> <i className='la la-envelope'></i> Messages
               </Link>
             </li>
           </ul>
