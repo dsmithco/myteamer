@@ -120,7 +120,7 @@ class Players extends Component {
           <Button color="primary" className="btn-sm" style={{borderRadius: '100px'}} onClick={()=>this.togglePlayerModal()} >
             <i className="la la-plus"></i> Add player
            </Button>
-       </h4>
+        </h4>
         <Fadein condition={this.state.players && this.state.players.length}>
           <div className='list-group'>
             <div className='list-group-item'>
@@ -164,7 +164,7 @@ class Players extends Component {
         <Modal isOpen={this.state.playerModalOpen} toggle={()=>this.togglePlayerModal()} className={this.props.className} backdrop={true}>
           <form onSubmit={(f) => this.handleSubmit(f)}>
             <ModalHeader>
-              <div>Add Player</div>
+              <div>{this.state.editPlayer.id ? 'Edit':'Add'} Player</div>
             </ModalHeader>
             <ModalBody>
                 <div className='row'>

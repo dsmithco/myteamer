@@ -1,16 +1,15 @@
 package com.rethinkwebdesign.myteamer.controller;
 
+import com.rethinkwebdesign.myteamer.model.Coach;
 import com.rethinkwebdesign.myteamer.model.Team;
+import com.rethinkwebdesign.myteamer.repository.CoachRepository;
 import com.rethinkwebdesign.myteamer.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +17,9 @@ public class TeamController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    CoachRepository coachRepository;
 
     @GetMapping("/teams")
     public Iterable<Team> getAllTeams() {
@@ -41,19 +43,30 @@ public class TeamController {
 
     @PutMapping("/teams/{id}")
     public ResponseEntity<Team> updateNote(@PathVariable(value = "id") Long teamId,
-                                           @Valid @RequestBody Team noteDetails) {
+                                           @Valid @RequestBody Team teamDetails) {
         Team team = teamRepository.findOne(teamId);
         if(team == null) {
             return ResponseEntity.notFound().build();
         }
-        if(noteDetails.getName() != null){
-            team.setName(noteDetails.getName());
+        if(teamDetails.getName() != null){
+            team.setName(teamDetails.getName());
         }
-        if(noteDetails.getSport() != null){
-            team.setSport(noteDetails.getSport());
+        if(teamDetails.getSport() != null){
+            team.setSport(teamDetails.getSport());
         }
-        if(noteDetails.getDivision() != null){
-            team.setDivision(noteDetails.getDivision());
+        if(teamDetails.getDivision() != null){
+            team.setDivision(teamDetails.getDivision());
+        }
+        if(teamDetails.getCoaches() != null){
+            ArrayList<Coach> newCoaches = new ArrayList<>();
+            for(Coach coach: teamDetails.getCoaches()){
+                if(coach.isDelete() == false){
+                    newCoaches.add(coach);
+                }else if (coach.getId() != null){
+                    coachRepository.delete(coach.getId());
+                }
+            }
+            team.setCoaches(newCoaches);
         }
 
         Team updatedTeam = teamRepository.save(team);

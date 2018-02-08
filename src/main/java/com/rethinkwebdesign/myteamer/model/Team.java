@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "teams", indexes = {
@@ -49,7 +47,7 @@ public class Team {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "team")
-    private Set<Coach> coaches = new HashSet<>();
+    private List<Coach> coaches = new ArrayList<Coach>();
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -120,17 +118,29 @@ public class Team {
         this.players = players;
     }
 
-    public Iterable<Coach> getCoaches() {
-        return coaches;
+    public ArrayList<Coach> getCoaches() {
+        ArrayList<Coach> newCoaches = new ArrayList<Coach>(coaches);
+        newCoaches.sort(Comparator.comparing(Coach::getPostedAt));
+        return newCoaches;
     }
 
-    public void setCoaches(Set<Coach> coaches) {
+    public void setCoaches(ArrayList<Coach> coaches) {
         this.coaches = coaches;
     }
 
-    public String getCoachNames(){
-        String coachNames = "names...";
-        return coachNames;
+    public void addCoach(Coach coach){
+        coaches.add(coach);
     }
 
+    public void removeCoach(Coach coach){
+        coaches.remove(coach);
+    }
+
+    public Date getPostedAt() {
+        return postedAt;
+    }
+
+    public Date getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
 }

@@ -1,6 +1,7 @@
 package com.rethinkwebdesign.myteamer.model;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
@@ -14,7 +15,8 @@ import java.util.Set;
     @Index(columnList = "firstName", name = "player_first_name_hidx"),
     @Index(columnList = "lastName", name = "player_last_name_hidx")
 })
-public class Coach implements Person{
+
+public class Coach implements Comparable<Coach>, Person{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -44,6 +46,9 @@ public class Coach implements Person{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contactInfoId")
     private ContactInfo contactInfo;
+
+    @Transient
+    private boolean delete = false;
 
     public Long getId() { return id; }
 
@@ -87,4 +92,26 @@ public class Coach implements Person{
         this.contactInfo = contactInfo;
     }
 
+    public boolean isDelete() {
+        return delete;
+    }
+
+    @JsonSetter("delete")
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public Date getPostedAt() {
+        return postedAt;
+    }
+
+    public Date getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    @Override
+    public int compareTo(Coach coach) {
+        return (this.getPostedAt().before(coach.getPostedAt()) ? -1 :
+                (this.getPostedAt().equals(coach.getPostedAt()) ? 0 : 1));
+    }
 }
