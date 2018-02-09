@@ -34,7 +34,8 @@ $grays: map-merge((
   "900": $gray-900
 ), $grays);
 
-$blue:    #007bff !default;
+$blue:    #2f82dd !default;
+$tan:     #f1efea !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
@@ -58,12 +59,14 @@ $colors: map-merge((
   "teal":       $teal,
   "cyan":       $cyan,
   "white":      $white,
+  "tan":        $tan,
   "gray":       $gray-600,
   "gray-dark":  $gray-800
 ), $colors);
 
 $primary:       $blue !default;
 $secondary:     $gray-600 !default;
+$splash:        $tan !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -80,7 +83,8 @@ $theme-colors: map-merge((
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       $dark
+  "dark":       $dark,
+  "splash":     $splash
 ), $theme-colors);
 // stylelint-enable
 
@@ -140,7 +144,7 @@ $sizes: map-merge((
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   $white !default;
+$body-bg:                   $tan !default;
 $body-color:                $gray-900 !default;
 
 // Links
@@ -207,9 +211,9 @@ $line-height-sm:              1.5 !default;
 $border-width:                1px !default;
 $border-color:                $gray-300 !default;
 
-$border-radius:               .15rem !default;
-$border-radius-lg:            .2rem !default;
-$border-radius-sm:            .2rem !default;
+$border-radius:               .3rem !default;
+$border-radius-lg:            .4rem !default;
+$border-radius-sm:            .3rem !default;
 
 $component-active-color:      $white !default;
 $component-active-bg:         theme-color("primary") !default;
@@ -231,7 +235,7 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberati
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
+$font-size-base:              .95rem !default; // Assumes the browser default, typically `16px`
 $font-size-lg:                ($font-size-base * 1.25) !default;
 $font-size-sm:                ($font-size-base * .8) !default;
 
@@ -322,7 +326,7 @@ $table-dark-color:            $body-bg !default;
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
-$input-btn-padding-y:         .375rem !default;
+$input-btn-padding-y:         .4rem !default;
 $input-btn-padding-x:         1rem !default;
 $input-btn-line-height:       $line-height-base !default;
 
@@ -330,8 +334,8 @@ $input-btn-focus-width:       .2rem !default;
 $input-btn-focus-color:       rgba($component-active-bg, .25) !default;
 $input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
 
-$input-btn-padding-y-sm:      .25rem !default;
-$input-btn-padding-x-sm:      .8rem !default;
+$input-btn-padding-y-sm:      .26rem !default;
+$input-btn-padding-x-sm:      .7rem !default;
 $input-btn-line-height-sm:    $line-height-sm !default;
 
 $input-btn-padding-y-lg:      .5rem !default;
@@ -570,12 +574,12 @@ $zindex-tooltip:                    1070 !default;
 // Navs
 
 $nav-link-padding-y:                .5rem !default;
-$nav-link-padding-x:                1rem !default;
+$nav-link-padding-x:                1.2rem !default;
 $nav-link-disabled-color:           $gray-600 !default;
 
 $nav-tabs-border-color:             $gray-300 !default;
 $nav-tabs-border-width:             $border-width !default;
-$nav-tabs-border-radius:            $border-radius !default;
+$nav-tabs-border-radius:            $border-radius-lg !default;
 $nav-tabs-link-hover-border-color:  $gray-200 $gray-200 $nav-tabs-border-color !default;
 $nav-tabs-link-active-color:        $gray-700 !default;
 $nav-tabs-link-active-bg:           $body-bg !default;
@@ -590,7 +594,7 @@ $nav-pills-link-active-bg:          $component-active-bg !default;
 $navbar-padding-y:                  ($spacer / 2) !default;
 $navbar-padding-x:                  $spacer !default;
 
-$navbar-nav-link-padding-x:         1rem !default;
+$navbar-nav-link-padding-x:         1.2rem !default;
 
 $navbar-brand-font-size:            $font-size-lg !default;
 // Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
@@ -603,7 +607,7 @@ $navbar-toggler-padding-x:          .75rem !default;
 $navbar-toggler-font-size:          $font-size-lg !default;
 $navbar-toggler-border-radius:      $btn-border-radius !default;
 
-$navbar-dark-color:                 rgba($white, .9) !default;
+$navbar-dark-color:                 rgba($white, .95) !default;
 $navbar-dark-hover-color:           rgba($white, .75) !default;
 $navbar-dark-active-color:          $white !default;
 $navbar-dark-disabled-color:        rgba($white, .25) !default;
@@ -657,7 +661,7 @@ $jumbotron-bg:                      $gray-200 !default;
 
 $card-spacer-y:                     .75rem !default;
 $card-spacer-x:                     1.25rem !default;
-$card-border-width:                 $border-width !default;
+$card-border-width:                 0 !default;
 $card-border-radius:                $border-radius !default;
 $card-border-color:                 rgba($black, .125) !default;
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width}) !default;

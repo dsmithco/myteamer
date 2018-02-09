@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { } from 'reactstrap';
 import axios from 'axios';
+import _ from 'lodash';
 import serialize from 'form-serialize';
 import { Link } from 'react-router-dom';
 import {
@@ -63,12 +64,11 @@ class Team extends Component {
     let id;
     form.preventDefault();
     let formData = serialize(form.target, { hash: true });
-    console.log(formData);
     axios.put('http://localhost:8080/api/teams/' + that.state.team.id , formData).then((response)=>{
       that.setState({team: response.data});
       that.toggleTeamModal(false);
     }).catch((response)=>{
-      console.log(response);
+      console.error(response);
     })
   }
 
@@ -93,55 +93,95 @@ class Team extends Component {
     })
   }
 
+  updateCoach(coach, e, field){
+    let newCoach = _.assign({}, coach);
+    newCoach[field] = e.target.value
+
+    let newCoaches = this.state.editTeam.coaches.concat();
+    let index = newCoaches.indexOf(coach);
+
+    newCoaches.splice(index, 1, newCoach)
+    this.setState({
+      editTeam: {...this.state.editTeam, coaches: newCoaches}
+    })
+  }
+
   render() {
     return (
       <div className="Teams">
-        <Link to="/teams">« Teams</Link>
-        <br/><br/>
-        <Fadein condition={this.state.team.id}>
-          <h1>
-            {this.state.team.name} &nbsp;
-            <a href='#' className="btn btn-light btn-sm" onClick={()=>{this.editTeam()}}>
-              <i className="la la-edit"></i> Edit
-            </a>
-          </h1>
-          <div className='form-group'>
-            <span>{this.state.team.sport}</span> &nbsp; <span className='text-muted'>:</span> &nbsp; <span>{this.state.team.division}</span>
+        <div className='card border-radius-0'>
+          <div className='container'>
+            <br/>
+            <Link to="/teams">« Teams</Link>
+              <br/>
+                <br/>
+                  <div className='row'>
+                    <div className='col-sm-12'>
+                      <h1 className="mb-0 pb-0">
+                        {this.state.team.name} &nbsp;
+                        <a href='#' className="btn btn-light btn-sm mb-2 float-right" onClick={()=>{this.editTeam()}}>
+                          <i className="la la-edit"></i> Edit team
+                        </a>
+                      </h1>
+                      <div className='form-group mb-3' style={{fontSize: 14}}>
+                        <div className='row'>
+                          <div className='col-sm-auto pr-sm-2'>
+                            <span>{this.state.team.division} {this.state.team.sport}</span>
+                          </div>
+                          <div className='col-sm-auto pl-sm-2'>
+                            <span className='text-muted'>Coach{this.state.team.coaches && this.state.team.coaches.length > 1 ? 'es':''}:</span> {this.state.team.coaches && this.state.team.coaches.map((coach, index)=>{
+                              return(
+                                <span key={index}>
+                                  <span>{coach.fullName}</span>{this.state.team.coaches.length > 1 && (index + 1 < this.state.team.coaches.length ? ', ':'')}
+                                </span>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul className="nav nav-tabs border-bottom-0">
+                    <li className="nav-item">
+                      <Link className={`nav-link ${(this.props.location.pathname.indexOf('players') > -1 ? 'active':'')}`}
+                            to={`/teams/${this.props.match.params.id}/players`}> <i className='la la-users'></i> Players
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className={`nav-link ${(this.props.location.pathname.indexOf('schedule') > -1 ? 'active':'')}`}
+                            to={`/teams/${this.props.match.params.id}/schedule`}> <i className='la la-calendar'></i> Schedule
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className={`nav-link ${(this.props.location.pathname.indexOf('messages') > -1 ? 'active':'')}`}
+                            to={`/teams/${this.props.match.params.id}/messages`}> <i className='la la-envelope'></i> Messages
+                      </Link>
+                    </li>
+                  </ul>
           </div>
-          <ul className="nav nav-tabs">
-            <li className="nav-item">
-              <Link className={`nav-link ${(this.props.location.pathname.indexOf('players') > -1 ? 'active':'')}`}
-                    to={`/teams/${this.props.match.params.id}/players`}> <i className='la la-users'></i> Players
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`nav-link ${(this.props.location.pathname.indexOf('schedule') > -1 ? 'active':'')}`}
-                    to={`/teams/${this.props.match.params.id}/schedule`}> <i className='la la-calendar'></i> Schedule
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`nav-link ${(this.props.location.pathname.indexOf('messages') > -1 ? 'active':'')}`}
-                    to={`/teams/${this.props.match.params.id}/messages`}> <i className='la la-envelope'></i> Messages
-              </Link>
-            </li>
-          </ul>
-          <br/>
-          <Switch>
-            <Route
-              path="/teams/:id/players"
-              render={()=><Players match={this.props.match}/>}
-            />
-            <Route
-              path="/teams/:id/schedule"
-              render={()=><Schedule match={this.props.match}/>}
-            />
-            <Route
-              path="/teams/:id/messages"
-              render={()=><Messages match={this.props.match}/>}
-            />
-            <Redirect to={this.props.location.pathname + '/players'}/>
-          </Switch>
-        </Fadein>
+        </div>
+        <div className='container'>
+          <Fadein condition={this.state.team.id}>
+            <br/>
+            <Switch>
+              <Route
+                path="/teams/:id/players"
+                render={()=><Players match={this.props.match}/>}
+              />
+              <Route
+                path="/teams/:id/schedule"
+                render={()=><Schedule match={this.props.match}/>}
+              />
+              <Route
+                path="/teams/:id/messages"
+                render={()=><Messages match={this.props.match}/>}
+              />
+              <Redirect to={this.props.location.pathname + '/players'}/>
+            </Switch>
+          </Fadein>
+        </div>
+
+
         <Modal isOpen={this.state.teamModalOpen} toggle={()=>this.toggleTeamModal()} className={this.props.className} backdrop={true}>
           <form onSubmit={(f) => this.handleSubmit(f)}>
             <ModalHeader>
@@ -192,7 +232,7 @@ class Team extends Component {
                                 type='text'
                                 name={`coaches[${index}][firstName]`}
                                 value={coach.firstName}
-                                onChange={(e)=>{this.setState({editTeam: {...this.state.editTeam, firstName: e.target.value}})}}
+                                onChange={(e)=>{this.updateCoach(coach, e, 'firstName')}}
                                 placeholder='First name'
                                 className='form-control simple'
                               />
@@ -221,7 +261,7 @@ class Team extends Component {
                                 type='text'
                                 name={`coaches[${index}][lastName]`}
                                 value={coach.lastName}
-                                onChange={(e)=>{this.setState({editTeam: {...this.state.editTeam, lastName: e.target.value}})}}
+                                onChange={(e)=>{this.updateCoach(coach, e, 'lastName')}}
                                 placeholder='Last name'
                                 className='form-control simple'
                               />

@@ -43,7 +43,7 @@
   display: inline-block;
   padding-top: $navbar-brand-padding-y;
   padding-bottom: $navbar-brand-padding-y;
-  margin-right: $navbar-padding-x;
+  margin-right: $navbar-padding-x * 3;
   font-size: $navbar-brand-font-size;
   line-height: inherit;
   white-space: nowrap;
@@ -68,7 +68,7 @@
   .nav-link {
     padding-right: 0;
     padding-left: 0;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .dropdown-menu {
@@ -220,7 +220,6 @@
   .navbar-nav {
     .nav-link {
       color: $navbar-light-color;
-
       @include hover-focus {
         color: $navbar-light-hover-color;
       }
@@ -235,6 +234,7 @@
     .nav-link.show,
     .nav-link.active {
       color: $navbar-light-active-color;
+      border-bottom: 2px solid $warning !important;
     }
   }
 
@@ -261,6 +261,12 @@
 
 // White links against a dark background
 .navbar-dark {
+  box-shadow: 0px 0px 8px rgba(0,0,0,.3), 0px 0px 1px rgba(0,0,0,.5);
+  border-bottom: 1px solid darken($primary, 40%) !important;
+
+  &.bg-dark{
+    background-color: darken($primary, 30%) !important;
+  }
   .navbar-brand {
     color: $navbar-dark-active-color;
 
@@ -272,7 +278,8 @@
   .navbar-nav {
     .nav-link {
       color: $navbar-dark-color;
-
+      box-shadow: 0px 0px 0 rgba(0,0,0,0) inset;
+      transition: .2s;
       @include hover-focus {
         color: $navbar-dark-hover-color;
       }
@@ -286,6 +293,7 @@
     .active > .nav-link,
     .nav-link.show,
     .nav-link.active {
+      box-shadow: 0px -2px 0 #ff9900 inset;
       color: $navbar-dark-active-color;
     }
   }

@@ -17,7 +17,13 @@ class Games extends Component {
   render() {
     return (
       <div className="Games">
-        <h1>Games</h1>
+        <div className='card border-radius-0'>
+          <div className='container'>
+            <br/>
+            <br/>
+            <h1>Games</h1>
+          </div>
+        </div>
       </div>
     );
   }

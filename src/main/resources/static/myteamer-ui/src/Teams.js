@@ -34,10 +34,18 @@ class Teams extends Component {
   render() {
     return (
       <div className="Teams">
-        <h1>Teams</h1>
+        <div className='card border-radius-0'>
+          <div className='container'>
+            <br/>
+              <br/>
+            <h1>Teams</h1>
+          </div>
+        </div>
+        <div className='container'>
+          <br/>
           <Fadein condition={this.state.teams.length}>
             <div className="card">
-              <table className={"table table-striped table-hover mb-0"}>
+              <table className={"table table-hover mb-0"}>
                 <thead>
                   <tr>
                     <th className="border-top-0">Name</th>
@@ -59,7 +67,7 @@ class Teams extends Component {
               </table>
             </div>
           </Fadein>
-        <hr/>
+        </div>
       </div>
     );
   }

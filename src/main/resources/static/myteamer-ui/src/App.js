@@ -35,6 +35,10 @@ class App extends Component {
       this.setState({isOpen: false})
   }
 
+  componentDidMount(){
+    console.log(this.props);
+  }
+
   render() {
     return (
       <div className="App">
@@ -43,12 +47,12 @@ class App extends Component {
             <Link className="navbar-brand" to="/">MyTeamer</Link>
             <NavbarToggler onClick={()=>{this.setState({isOpen: !this.state.isOpen})}} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
+              <Nav className="mr-auto" navbar>
                 <NavItem>
-                  <Link className="nav-link" onClick={()=>this.pageChange()} to="/teams">Teams</Link>
+                  <Link className={`nav-link ${this.props.location.pathname.indexOf('teams') >-1 ? 'active':''}`} onClick={()=>this.pageChange()} to="/teams">Teams</Link>
                 </NavItem>
                 <NavItem>
-                  <Link className="nav-link" onClick={()=>this.pageChange()} to="/games">Games</Link>
+                  <Link className={`nav-link ${this.props.location.pathname.indexOf('games') >-1 ? 'active':''}`} onClick={()=>this.pageChange()} to="/games">Games</Link>
                 </NavItem>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav caret>
@@ -71,8 +75,7 @@ class App extends Component {
             </Collapse>
           </div>
         </Navbar>
-        <br/>
-        <div className="container text-left">
+        <div className="text-left">
           <Switch>
             <Route exact path="/teams" component={Teams}/>
             <Route path="/teams/:id" component={Team}/>

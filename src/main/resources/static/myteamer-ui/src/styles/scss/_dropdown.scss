@@ -26,7 +26,8 @@
   list-style: none;
   background-color: $dropdown-bg;
   background-clip: padding-box;
-  border: $dropdown-border-width solid $dropdown-border-color;
+  border: 0 solid $dropdown-border-color;
+  box-shadow: 0px 1px 3px rgba(0,0,0,.1), 0px 1px 1px rgba(0,0,0,.2);
   @include border-radius($dropdown-border-radius);
   @include box-shadow($dropdown-box-shadow);
 }

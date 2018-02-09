@@ -3,6 +3,7 @@ package com.rethinkwebdesign.myteamer.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,7 +22,9 @@ public class Coach implements Comparable<Coach>, Person{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @NotBlank(
+            message = "First name is required"
+    )
     @Column
     private String firstName;
 

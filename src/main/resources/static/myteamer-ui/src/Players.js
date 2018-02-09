@@ -116,14 +116,16 @@ class Players extends Component {
   render() {
     return (
       <div className="Players">
-        <h4>Players &nbsp;
-          <Button color="primary" className="btn-sm" style={{borderRadius: '100px'}} onClick={()=>this.togglePlayerModal()} >
-            <i className="la la-plus"></i> Add player
-           </Button>
-        </h4>
+        <div className='form-group'>
+          <h3>Players &nbsp;
+            <Button color="success" className="btn-sm float-right" style={{borderRadius: '100px'}} onClick={()=>this.togglePlayerModal()} >
+              <i className="la la-plus"></i> Add player
+             </Button>
+          </h3>
+        </div>
         <Fadein condition={this.state.players && this.state.players.length}>
-          <div className='list-group'>
-            <div className='list-group-item'>
+          <div className='list-group card'>
+            <div className='list-group-item bg-muted border-0'>
               <div className='row'>
                 <div className='col-sm-2'>
                   <strong>Number</strong>
@@ -135,17 +137,13 @@ class Players extends Component {
             </div>
             {this.state.players && this.state.players.map((player, index)=>{
               return(
-                <div className='list-group-item' key={index}>
+                <div className='list-group-item border-0' key={index}>
                   <div className='row' key={index}>
                     <div className='col-sm-2'>
-                      <a href=''>
-                        {player.jerseyNumber}
-                      </a>
+                      {player.jerseyNumber}
                     </div>
                     <div className='col-sm-4'>
-                      <a href=''>
-                        {player.fullName}
-                      </a>
+                      {player.fullName}
                     </div>
                     <div className='col-sm-6 text-right'>
                       <a href='#' className="btn btn-light btn-sm" onClick={()=>{this.editPlayer(player)}}>
