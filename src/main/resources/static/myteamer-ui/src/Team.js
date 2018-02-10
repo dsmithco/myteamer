@@ -110,59 +110,55 @@ class Team extends Component {
     return (
       <div className="Teams">
         <div className='card border-radius-0'>
-          <div className='container'>
-            <br/>
-            <Link to="/teams">« Teams</Link>
-              <br/>
-                <br/>
+          <div className='container pt-3'>
+            <Link to="/teams" className='btn btn-outline-info btn-sm rounded'><i className='la la-angle-left'></i> Teams</Link>
+            <div className='row mt-3'>
+              <div className='col-sm-12'>
+                <h1 className="mb-0 pb-0">
+                  {this.state.team.name} &nbsp;
+                  <a href='#' className="btn btn-light btn-sm mb-2 float-right" onClick={()=>{this.editTeam()}}>
+                    <i className="la la-edit"></i> Edit team
+                  </a>
+                </h1>
+                <div className='form-group mb-3' style={{fontSize: 14}}>
                   <div className='row'>
-                    <div className='col-sm-12'>
-                      <h1 className="mb-0 pb-0">
-                        {this.state.team.name} &nbsp;
-                        <a href='#' className="btn btn-light btn-sm mb-2 float-right" onClick={()=>{this.editTeam()}}>
-                          <i className="la la-edit"></i> Edit team
-                        </a>
-                      </h1>
-                      <div className='form-group mb-3' style={{fontSize: 14}}>
-                        <div className='row'>
-                          <div className='col-sm-auto pr-sm-2'>
-                            <span>{this.state.team.division} {this.state.team.sport}</span>
-                          </div>
-                          <div className='col-sm-auto pl-sm-2'>
-                            <span className='text-muted'>Coach{this.state.team.coaches && this.state.team.coaches.length > 1 ? 'es':''}:</span> {this.state.team.coaches && this.state.team.coaches.map((coach, index)=>{
-                              return(
-                                <span key={index}>
-                                  <span>{coach.fullName}</span>{this.state.team.coaches.length > 1 && (index + 1 < this.state.team.coaches.length ? ', ':'')}
-                                </span>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      </div>
+                    <div className='col-sm-auto pr-sm-2'>
+                      <span>{this.state.team.division} {this.state.team.sport}</span>
+                    </div>
+                    <div className='col-sm-auto pl-sm-2'>
+                      <span className='text-muted'>Coach{this.state.team.coaches && this.state.team.coaches.length > 1 ? 'es':''}:</span> {this.state.team.coaches && this.state.team.coaches.map((coach, index)=>{
+                        return(
+                          <span key={index}>
+                            <span>{coach.fullName}</span>{this.state.team.coaches.length > 1 && (index + 1 < this.state.team.coaches.length ? ', ':'')}
+                          </span>
+                        )
+                      })}
                     </div>
                   </div>
-                  <ul className="nav nav-tabs border-bottom-0">
-                    <li className="nav-item">
-                      <Link className={`nav-link ${(this.props.location.pathname.indexOf('players') > -1 ? 'active':'')}`}
-                            to={`/teams/${this.props.match.params.id}/players`}> <i className='la la-users'></i> Players
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className={`nav-link ${(this.props.location.pathname.indexOf('schedule') > -1 ? 'active':'')}`}
-                            to={`/teams/${this.props.match.params.id}/schedule`}> <i className='la la-calendar'></i> Schedule
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className={`nav-link ${(this.props.location.pathname.indexOf('messages') > -1 ? 'active':'')}`}
-                            to={`/teams/${this.props.match.params.id}/messages`}> <i className='la la-envelope'></i> Messages
-                      </Link>
-                    </li>
-                  </ul>
+                </div>
+              </div>
+            </div>
+            <ul className="nav nav-tabs border-bottom-0">
+              <li className="nav-item">
+                <Link className={`nav-link ${(this.props.location.pathname.indexOf('players') > -1 ? 'active':'')}`}
+                      to={`/teams/${this.props.match.params.id}/players`}> <i className='la la-users'></i> Players
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className={`nav-link ${(this.props.location.pathname.indexOf('schedule') > -1 ? 'active':'')}`}
+                      to={`/teams/${this.props.match.params.id}/schedule`}> <i className='la la-calendar'></i> Schedule
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className={`nav-link ${(this.props.location.pathname.indexOf('messages') > -1 ? 'active':'')}`}
+                      to={`/teams/${this.props.match.params.id}/messages`}> <i className='la la-envelope'></i> Messages
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className='container'>
+        <div className='container pt-4'>
           <Fadein condition={this.state.team.id}>
-            <br/>
             <Switch>
               <Route
                 path="/teams/:id/players"
@@ -194,7 +190,7 @@ class Team extends Component {
                   </div>
                   <div className='col-sm-7'>
                     <div className="form-group">
-                      <input type='text' ref="teamNameInput" name="name" defaultValue={this.state.editTeam.name} placeholder='First Name' className='form-control simple'/>
+                      <input type='text' ref="teamNameInput" name="name" defaultValue={this.state.editTeam.name} placeholder='Name' className='form-control simple'/>
                     </div>
                   </div>
                 </div>
@@ -269,7 +265,7 @@ class Team extends Component {
                           </div>
                           <div className='col-sm-2 pr-sm-0'>
                             <div className="form-group">
-                              <a href='#' className='btn btn-light btn-sm rounded-curve' onClick={()=>{this.removeCoach(index, this.state.editTeam.coaches)}}><i className='la la-trash'></i></a>
+                              <a href='#' className='btn btn-sm btn-outline-danger' onClick={()=>{this.removeCoach(index, this.state.editTeam.coaches)}}><i className='la la-trash'></i></a>
                             </div>
                           </div>
                         </div>

@@ -16,7 +16,10 @@ body {
 
 .form-control.simple {
   border-radius: 0;
+  margin-top: 1px;
   border-width: 0 0 1px 0;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .form-control.simple:focus {
@@ -29,4 +32,8 @@ th {
 
 .border-radius-0 {
   border-radius: 0px !important;
+}
+
+.rounded {
+  border-radius: 500px !important;
 }

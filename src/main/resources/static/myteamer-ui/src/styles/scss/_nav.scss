@@ -40,7 +40,7 @@
   .nav-link {
     border: 0 solid transparent;
     border-bottom: 3px solid transparent;
-    color: darken($primary, 10%);
+    color: $link-color;
     background-color: transparent;
     transition: .2s;
     @include border-top-radius($nav-tabs-border-radius);
@@ -60,7 +60,7 @@
   .nav-item.show .nav-link {
     color: $nav-tabs-link-active-color;
     // background-color: $nav-tabs-link-active-bg;
-    border-color: $primary;
+    border-color: $link-color;
   }
 
   .dropdown-menu {

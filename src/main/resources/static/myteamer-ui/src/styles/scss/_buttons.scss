@@ -12,8 +12,9 @@
   vertical-align: middle;
   user-select: none;
   font-weight: 300;
+  transition: .2s;
   text-transform: uppercase;
-  box-shadow: 0px -40px 40px -25px rgba(0, 0, 0, 0.05) inset, 0px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -40px 40px -25px rgba(0, 0, 0, 0.08) inset, 0px 2px 1px -1px rgba(0, 0, 0, 0.2);
   border: $btn-border-width solid transparent;
   @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
   @include transition($btn-transition);
@@ -72,6 +73,7 @@ fieldset:disabled a.btn {
 @each $color, $value in $theme-colors {
   .btn-outline-#{$color} {
     @include button-outline-variant($value);
+    box-shadow: none;
   }
 }
 

@@ -14,6 +14,8 @@
   background-color: $input-bg;
   background-clip: padding-box;
   border: $input-border-width solid $input-border-color;
+  border-bottom-color: darken($input-border-color, 10%);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.05);
 
   // Note: This has no effect on <select>s in some browsers, due to the limited stylability of `<select>`s in CSS.
   @if $enable-rounded {

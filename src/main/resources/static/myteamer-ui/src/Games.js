@@ -18,9 +18,7 @@ class Games extends Component {
     return (
       <div className="Games">
         <div className='card border-radius-0'>
-          <div className='container'>
-            <br/>
-            <br/>
+          <div className='container pt-5'>
             <h1>Games</h1>
           </div>
         </div>

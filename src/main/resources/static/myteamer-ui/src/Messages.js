@@ -17,7 +17,11 @@ class Messages extends Component {
   render() {
     return (
       <div className="Messages">
-        <h4>Messages</h4>
+        <div className='card border-radius-0'>
+          <div className='container pt-5'>
+            <h1>Messages</h1>
+          </div>
+        </div>
       </div>
     );
   }
