@@ -43,11 +43,10 @@ public class Team {
             mappedBy = "team")
     private Set<Player> players = new HashSet<>();
 
-
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "team")
-    private List<Coach> coaches = new ArrayList<Coach>();
+    private List<Coach> coaches = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -118,6 +117,7 @@ public class Team {
         this.players = players;
     }
 
+    @JsonSetter("couches")
     public ArrayList<Coach> getCoaches() {
         ArrayList<Coach> newCoaches = new ArrayList<Coach>(coaches);
         newCoaches.sort(Comparator.comparing(Coach::getPostedAt));

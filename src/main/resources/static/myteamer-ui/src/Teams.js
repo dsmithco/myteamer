@@ -34,7 +34,7 @@ class Teams extends Component {
   render() {
     return (
       <div className="Teams">
-        <div className='card border-radius-0'>
+        <div className='border-radius-0'>
           <div className='container pt-5'>
             <h1>Teams</h1>
           </div>

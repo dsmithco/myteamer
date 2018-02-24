@@ -69,15 +69,15 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar color="dark" className="text-white" links="white" dark expand="md">
-          <div className="container-fluid">
+          <div className="container">
             <Link className="navbar-brand" to="/">MyTeamer</Link>
             <NavbarToggler onClick={()=>{this.setState({isOpen: !this.state.isOpen})}} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="mr-auto" style={navStyle.navbar} navbar>
+              <Nav className="ml-auto" style={navStyle.navbar} navbar>
                 <NavItem>
                   <Link style={navStyle.link} className={`nav-link ${this.props.location.pathname.indexOf('teams') >-1 ? 'active':''}`} onClick={()=>this.pageChange()} to="/teams">
                     <div style={navStyle.iconWrapper}>
-                      <i style={navStyle.icon} class="la la-users"></i>
+                      <i style={navStyle.icon} className="la la-users"></i>
                     </div>
                     <span style={navStyle.text}>Teams</span>
                   </Link>
@@ -85,7 +85,7 @@ class App extends Component {
                 <NavItem>
                   <Link style={navStyle.link} className={`nav-link ${this.props.location.pathname.indexOf('games') >-1 ? 'active':''}`} onClick={()=>this.pageChange()} to="/games">
                     <div style={navStyle.iconWrapper}>
-                      <i style={navStyle.icon} class="la la-trophy"></i>
+                      <i style={navStyle.icon} className="la la-trophy"></i>
                     </div>
                     <span style={navStyle.text}>Games</span>
                   </Link>
@@ -93,7 +93,7 @@ class App extends Component {
                 <NavItem>
                   <Link style={navStyle.link} className={`nav-link ${this.props.location.pathname.indexOf('messages') >-1 ? 'active':''}`} onClick={()=>this.pageChange()} to="/messages">
                     <div style={navStyle.iconWrapper}>
-                      <i style={navStyle.icon} class="la la-envelope"></i>
+                      <i style={navStyle.icon} className="la la-envelope"></i>
                     </div>
                     <span style={navStyle.text}>Messages</span>
                   </Link>

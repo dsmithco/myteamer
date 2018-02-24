@@ -109,7 +109,7 @@ class Team extends Component {
   render() {
     return (
       <div className="Teams">
-        <div className='card border-radius-0'>
+        <div className='border-radius-0'>
           <div className='container pt-3'>
             <Link to="/teams" className='btn btn-outline-info btn-sm rounded'><i className='la la-angle-left'></i> Teams</Link>
             <div className='row mt-3'>

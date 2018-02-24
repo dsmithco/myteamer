@@ -93,7 +93,7 @@
     <bean id="rememberMeAuthenticationProvider"
           class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
         <property name="key" value="artifactory"/>
-        <!--<security:custom-authentication-provider/>-->
+        <!--<config:custom-authentication-provider/>-->
     </bean>
 
 </beans>

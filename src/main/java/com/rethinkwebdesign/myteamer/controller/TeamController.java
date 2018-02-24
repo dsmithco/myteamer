@@ -6,6 +6,7 @@ import com.rethinkwebdesign.myteamer.repository.CoachRepository;
 import com.rethinkwebdesign.myteamer.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class TeamController {
     CoachRepository coachRepository;
 
     @GetMapping("/teams")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public Iterable<Team> getAllTeams() {
         return teamRepository.findAll();
     }
@@ -57,17 +59,17 @@ public class TeamController {
         if(teamDetails.getDivision() != null){
             team.setDivision(teamDetails.getDivision());
         }
-        if(teamDetails.getCoaches() != null){
-            ArrayList<Coach> newCoaches = new ArrayList<>();
-            for(Coach coach: teamDetails.getCoaches()){
-                if(coach.isDelete() == false){
-                    newCoaches.add(coach);
-                }else if (coach.getId() != null){
-                    coachRepository.delete(coach.getId());
-                }
-            }
-            team.setCoaches(newCoaches);
-        }
+//        if(teamDetails.getCoaches() != null){
+//            ArrayList<Coach> newCoaches = new ArrayList<>();
+//            for(Coach coach: teamDetails.getCoaches()){
+//                if(coach.isDelete() == false){
+//                    newCoaches.add(coach);
+//                }else if (coach.getId() != null){
+//                    coachRepository.delete(coach.getId());
+//                }
+//            }
+//            team.setCoaches(newCoaches);
+//        }
 
         Team updatedTeam = teamRepository.save(team);
         return ResponseEntity.ok(updatedTeam);
